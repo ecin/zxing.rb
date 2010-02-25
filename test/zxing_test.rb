@@ -1,3 +1,5 @@
+#!/usr/bin/env jruby --headless -rubygems
+
 require 'shoulda'
 require File.expand_path( File.dirname(__FILE__) + '/../lib/zxing' )
 
