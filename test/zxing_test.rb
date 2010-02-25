@@ -5,18 +5,19 @@ class ZXingTest < Test::Unit::TestCase
   context "A QR decoder" do
     setup do
       @decoder = ZXing
-      @uri = "http://justinsomnia.org/images/qr-code-justinsomnia.png"
-      @path = "qr-code-justinsomnia.png"
+      @uri = "http://2d-code.co.uk/images/bbc-logo-in-qr-code.gif"
+      @path = File.expand_path( File.dirname(__FILE__) + '/qrcode.png')
       @google_logo = "http://www.google.com/logos/grandparentsday10.gif"
-      @code_result = "http://justinsomnia.org/"
+      @uri_result = "http://bbc.co.uk/programmes"
+      @path_result = "http://rubyflow.com"
     end
 
     should "decode a URL" do
-      assert_equal @decoder.decode(@uri), @code_result
+      assert_equal @decoder.decode(@uri), @uri_result
     end
 
     should "decode a file" do
-      assert_equal @decoder.decode(@path), @code_result
+      assert_equal @decoder.decode(@path), @path_result
     end
 
     should "return nil if #decode fails" do
