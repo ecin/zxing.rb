@@ -46,7 +46,7 @@ module ZXing
 
   private
 
-  def self.to_bitmap(image)
+  def to_bitmap(image)
     luminance = BufferedImageLuminanceSource.new(image)
     binarizer = GlobalHistogramBinarizer.new(luminance)
     BinaryBitmap.new(binarizer)
