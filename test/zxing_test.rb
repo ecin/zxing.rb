@@ -4,7 +4,7 @@ require 'shoulda'
 require File.expand_path( File.dirname(__FILE__) + '/../lib/zxing' )
 
 class ZXingTest < Test::Unit::TestCase
-  context "A QR decoder" do
+  context "A QR decoder singleton" do
     setup do
       @decoder = ZXing
       @uri = "http://2d-code.co.uk/images/bbc-logo-in-qr-code.gif"
@@ -29,5 +29,19 @@ class ZXingTest < Test::Unit::TestCase
     should "raise an exception if #decode! fails" do
       assert_raise(NativeException) { @decoder.decode!(@google_logo) }
     end
+  end
+
+  context "A QR decoder module" do
+    
+    setup do
+      class SpyRing; include ZXing end
+      @ring = SpyRing.new
+    end
+
+    should "include #decode and #decode! into classes" do
+      assert_equal defined?(@ring.decode), "method"
+      assert_equal defined?(@ring.decode!), "method"
+    end
+
   end
 end

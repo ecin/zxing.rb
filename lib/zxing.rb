@@ -1,6 +1,6 @@
 raise "ZXing requires JRuby" unless defined?(JRuby)
 
-require File.expand_path( File.dirname(__FILE__) + '/core.jar' )	# ZXing core classes
+require File.expand_path( File.dirname(__FILE__) + '/core.jar' )	  # ZXing core classes
 require File.expand_path( File.dirname(__FILE__) + '/javase.jar' )	# ZXing JavaSE classes
 
 require 'uri'
@@ -21,7 +21,10 @@ module ZXing
 
   @@decoder = QRCodeReader.new
 
-  def self.decode(descriptor)
+  # Transform the module into a singleton!
+  extend self
+
+  def decode(descriptor)
     begin
       decode!(descriptor)
     rescue NativeException
@@ -29,7 +32,7 @@ module ZXing
     end
   end
 
-  def self.decode!(descriptor)
+  def decode!(descriptor)
     descriptor = case descriptor
     when URI.regexp(['http', 'https'])
       URL.new(descriptor)
