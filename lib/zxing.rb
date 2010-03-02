@@ -6,7 +6,7 @@ require File.expand_path( File.dirname(__FILE__) + '/javase.jar' )	# ZXing JavaS
 require 'uri'
 
 # Google ZXing classes
-java_import com.google.zxing.qrcode.QRCodeReader
+java_import com.google.zxing.MultiFormatReader
 java_import com.google.zxing.BinaryBitmap
 java_import com.google.zxing.Binarizer
 java_import com.google.zxing.common.GlobalHistogramBinarizer
@@ -19,7 +19,7 @@ java_import java.net.URL
 
 module ZXing
 
-  @@decoder = QRCodeReader.new
+  @@decoder = MultiFormatReader.new
 
   # Transform the module into a singleton!
   extend self
