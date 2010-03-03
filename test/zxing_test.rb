@@ -1,7 +1,7 @@
 #!/usr/bin/env jruby --headless -rubygems
 
-require 'shoulda'
-require File.expand_path( File.dirname(__FILE__) + '/../lib/zxing' )
+require 'test_helper'
+require 'zxing'
 
 class ZXingTest < Test::Unit::TestCase
   context "A QR decoder singleton" do
