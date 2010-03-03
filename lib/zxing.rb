@@ -33,6 +33,8 @@ module ZXing
   end
 
   def decode!(descriptor)
+    descriptor = descriptor.path if descriptor.respond_to? :path
+    descriptor = descriptor.to_s
     descriptor = case descriptor
     when URI.regexp(['http', 'https'])
       URL.new(descriptor)
