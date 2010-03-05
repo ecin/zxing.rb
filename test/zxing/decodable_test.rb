@@ -19,7 +19,7 @@ class DecodableTest < Test::Unit::TestCase
 
   context "A Decodable module" do
     setup do
-      @file = File.open('qrcode.png')
+      @file = File.open( File.expand_path( File.dirname(__FILE__) + '/../qrcode.png' ))
       @uri = URL.new "http://2d-code.co.uk/images/bbc-logo-in-qr-code.gif"
     end
 
