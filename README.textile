@@ -1,4 +1,10 @@
-h2. Decode QR Codes
+h1. ZXing
+
+h2. Getting rollin'
+
+p. @gem install zxing@
+
+h2. Decode QR codes (and other 1D/2D barcode formats)
 
 p. "QR code":http://en.wikipedia.org/wiki/QR_Code generation is well served in the Ruby community, but decoding seems to be stuck in the Java world. This is an attempt to bridge the gap by wrapping the "ZXing":http://code.google.com/p/zxing/ library with JRuby. ZXing conveniently decodes a plethora of barcodes. Their site has a complete list.
 
