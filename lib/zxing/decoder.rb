@@ -1,5 +1,8 @@
 module ZXing
-  unless RUBY_PLATFORM != 'java'
+  if RUBY_PLATFORM != 'java'
+    require 'zxing/client'
+    Decoder = Client.new
+  else
     require 'java'
     require 'zxing/core.jar'
     require 'zxing/javase.jar'
@@ -15,6 +18,10 @@ module ZXing
 
     class Decoder
       attr_accessor :file
+
+      def self.decode(file)
+        new(file).decode
+      end
 
       def initialize(file)
         self.file = file

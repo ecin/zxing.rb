@@ -1,9 +1,7 @@
 require 'zxing/decoder'
 
 module ZXing
-  extend self
-
-  def decode(file)
-    Decoder.new(file).decode
+  def self.decode(file)
+    Decoder.decode(file)
   end
 end

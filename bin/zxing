@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+require "jruby-jars"
+
+port = ARGV[0]
+
+jruby = JRubyJars.core_jar_path
+jruby_stdlib = JRubyJars.stdlib_jar_path
+
+java_args = [
+  "-cp", [JRubyJars.core_jar_path, JRubyJars.stdlib_jar_path].join(":"),
+  "org.jruby.Main"
+]
+
+lib = File.expand_path('../../lib', __FILE__)
+$:.unshift(lib) unless $:.include?(lib)
+
+path = "#{lib}/zxing/server.rb"
+
+ruby_args = [
+  "-r", path,
+  "-e", "ZXing::Server.start!(#{port})"
+]
+
+exec("java", *(java_args + ruby_args))
