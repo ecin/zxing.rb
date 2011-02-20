@@ -1,3 +1,4 @@
+require 'zxing/version'
 require 'zxing/decoder'
 
 module ZXing
