@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", "~> 2.5.0"
 
   s.rubyforge_project = "zxing"
-  s.files         = Dir.glob("{bin,lib,spec}/**/*") + %w(README.textile)
+  s.files         = Dir.glob("{bin,lib,spec}/**/*") + %w(README.rdoc)
   s.test_files    = Dir.glob("spec/**/*")
   s.executables   = Dir.glob("bin/*").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]

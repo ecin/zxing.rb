@@ -16,8 +16,8 @@ Rake::RDocTask.new do |rdoc|
   rdoc.template = 'direct' # lighter template used on railsapi.com
 
   rdoc.title = "ZXing"
-  rdoc.main = "README.textile"
-  rdoc.rdoc_files.include('README.textile')
+  rdoc.main = "README.rdoc"
+  rdoc.rdoc_files.include('README.rdoc')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
