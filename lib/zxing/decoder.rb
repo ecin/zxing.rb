@@ -19,8 +19,17 @@ module ZXing
     class Decoder
       attr_accessor :file
 
-      def self.decode(file)
+      def self.decode!(file)
+        raise ArgumentError, "File #{file} could not be found" unless File.exist?(file)
         new(file).decode
+      rescue NativeException
+        raise UndecodableError
+      end
+
+      def self.decode(file)
+        decode!(file)
+      rescue ArgumentError, UndecodableError
+        nil
       end
 
       def initialize(file)
