@@ -31,6 +31,8 @@ module ZXing
         MultiFormatReader.new.decode(bitmap).to_s
       end
 
+      private
+
       def bitmap
         BinaryBitmap.new(binarizer)
       end
