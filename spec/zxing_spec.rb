@@ -20,7 +20,9 @@ describe ZXing do
 
     context "when file does not exist" do
       let(:file) { 'nonexistentfile.png' }
-      it { should be_nil }
+      it "raises an error" do
+        expect { subject }.to raise_error(ArgumentError, "File nonexistentfile.png could not be found")
+      end
     end
   end
 

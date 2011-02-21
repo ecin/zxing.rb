@@ -20,7 +20,6 @@ module ZXing
       attr_accessor :file
 
       def self.decode!(file)
-        raise ArgumentError, "File #{file} could not be found" unless File.exist?(file)
         new(file).decode
       rescue NativeException
         raise UndecodableError
@@ -28,7 +27,7 @@ module ZXing
 
       def self.decode(file)
         decode!(file)
-      rescue ArgumentError, UndecodableError
+      rescue UndecodableError
         nil
       end
 
@@ -47,6 +46,7 @@ module ZXing
       end
 
       def image
+        raise ArgumentError, "File #{file} could not be found" unless File.exist?(file)
         ImageIO.read(Java::JavaIO::File.new(file))
       end
 
