@@ -3,9 +3,7 @@ require 'zxing/decoder'
 
 module ZXing
   class UndecodableError < StandardError
-    def message
-      "Image not decodable"
-    end
+    def message; "Image not decodable"; end
   end
 
   def self.decode(file)
