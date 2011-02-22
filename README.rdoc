@@ -24,8 +24,20 @@ decodes a plethora of barcodes. Their site has a complete list.
     # Pass a path to a file, and it will return the characters encoded within
     # the barcode image.  For example, if a QRCode image has the text "QRcode
     # string" embedded:
-
     ZXing.decode '/Users/ecin/qrcode.png' #=> "QRcode string"
+
+    # You can also decode a URL...
+    ZXing.decode 'http://2d-code.co.uk/images/bbc-logo-in-qr-code.gif'
+
+    # or an instance of File
+    ZXing.decode File.new('qrcode.png')
+
+    # or anything that returns a URL or file path when #path is called on it.
+    class Image
+      attr_reader :path
+      def initialize(path); @path = path end
+    end
+
 
     # ZXing#decode returns nil if it can't decode the image.
     ZXing.decode 'image_without_a_code.png' #=> nil
