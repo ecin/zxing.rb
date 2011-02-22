@@ -22,7 +22,7 @@ module ZXing
   #   ZXing.decode(path) #=> nil
   #
   def self.decode(file)
-    Decoder.decode(file)
+    Decoder.decode normalize(file)
   end
 
   ##
@@ -36,6 +36,11 @@ module ZXing
   #   ZXing.decode(path) #=> ZXing::UndecodableError
   #
   def self.decode!(file)
-    Decoder.decode!(file)
+    Decoder.decode! normalize(file)
+  end
+
+  private
+  def self.normalize(file)
+    file.respond_to?(:path) ? file.path : file
   end
 end

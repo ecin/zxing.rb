@@ -15,6 +15,7 @@ module ZXing
     java_import com.google.zxing.client.j2se.BufferedImageLuminanceSource
 
     java_import javax.imageio.ImageIO
+    java_import java.net.URL
 
     class Decoder
       attr_accessor :file
@@ -46,8 +47,16 @@ module ZXing
       end
 
       def image
-        raise ArgumentError, "File #{file} could not be found" unless File.exist?(file)
-        ImageIO.read(Java::JavaIO::File.new(file))
+        ImageIO.read(io)
+      end
+
+      def io
+        if file =~ URI.regexp(['http', 'https'])
+          URL.new(file)
+        else
+          raise ArgumentError, "File #{file} could not be found" unless File.exist?(file)
+          Java::JavaIO::File.new(file)
+        end
       end
 
       def luminance

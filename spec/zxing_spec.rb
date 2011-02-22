@@ -4,12 +4,33 @@ def fixture_image(image)
   File.expand_path("../fixtures/#{image}.png", __FILE__)
 end
 
+class Foo
+  def path
+    File.expand_path("../fixtures/example.png", __FILE__)
+  end
+end
+
 describe ZXing do
   describe ".decode" do
     subject { ZXing.decode(file) }
 
-    context "when file exists" do
+    context "with a string path to image" do
       let(:file) { fixture_image("example") }
+      it { should == "example" }
+    end
+
+    context "with a uri" do
+      let(:file) { "http://2d-code.co.uk/images/bbc-logo-in-qr-code.gif" }
+      it { should == "http://bbc.co.uk/programmes" }
+    end
+
+    context "with an instance of File" do
+      let(:file) { File.new(fixture_image("example")) }
+      it { should == "example" }
+    end
+
+    context "with an object that responds to #path" do
+      let(:file) { Foo.new }
       it { should == "example" }
     end
 
@@ -24,6 +45,7 @@ describe ZXing do
         expect { subject }.to raise_error(ArgumentError, "File nonexistentfile.png could not be found")
       end
     end
+
   end
 
   describe ".decode!" do
@@ -36,6 +58,13 @@ describe ZXing do
 
     context "when the image cannot be decoded" do
       let(:file) { fixture_image("cat") }
+      it "raises an error" do
+        expect { subject }.to raise_error(ZXing::UndecodableError, "Image not decodable")
+      end
+    end
+
+    context "when the image cannot be decoded from a URL" do
+      let(:file) { "http://www.google.com/logos/grandparentsday10.gif" }
       it "raises an error" do
         expect { subject }.to raise_error(ZXing::UndecodableError, "Image not decodable")
       end
