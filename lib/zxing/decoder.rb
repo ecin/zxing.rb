@@ -1,3 +1,5 @@
+require 'uri'
+
 module ZXing
   if RUBY_PLATFORM != 'java'
     require 'zxing/client'
