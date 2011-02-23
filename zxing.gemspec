@@ -7,10 +7,10 @@ Gem::Specification.new do |s|
   s.version     = ZXing::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["ecin", "Joshua Davey"]
-  s.email       = ["josh@joshuadavey.com"]
+  s.email       = ["ecin@copypastel.com", "josh@joshuadavey.com"]
   s.homepage    = "http://github.com/ecin/zxing.rb"
-  s.summary     = %q{Decode barcodes with ZXing java library}
-  s.description = %q{JRuby wrapper for ZXing 1D/2D barcode image processing library.}
+  s.summary     = %q{JRuby wrapper for ZXing 1D/2D barcode image processing library.}
+  s.description = %q{Need to decode 1D/2D bars and don't mind using JRuby to help with the task? ZXing is the wrapper for you!}
 
   if RUBY_PLATFORM != "java" && ENV["PLATFORM"] != "java"
     s.add_runtime_dependency "jruby-jars"
