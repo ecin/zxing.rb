@@ -1,8 +1,5 @@
 require 'spec_helper'
-
-def fixture_image(image)
-  File.expand_path("../fixtures/#{image}.png", __FILE__)
-end
+require 'zxing'
 
 class Foo
   def path
