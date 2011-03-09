@@ -1,3 +1,5 @@
+require 'socket'
+
 module ZXing
   BIN = File.expand_path('../../../bin/zxing', __FILE__)
 
