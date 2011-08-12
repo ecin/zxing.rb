@@ -26,6 +26,11 @@ decodes a plethora of barcodes. Their site has a complete list.
     # string" embedded:
     ZXing.decode '/Users/ecin/qrcode.png' #=> "QRcode string"
 
+    # ZXing#decode_all returns an array of encoded values.  For example if an
+    # image has a barcode encoded with the value "test123" and another barcode
+    # encoded with the value "test456":
+    ZXing.decode_all 'image_with_multiple_barcodes.png' #=> ["test456", "test123"]
+
     # You can also decode a URL...
     ZXing.decode 'http://2d-code.co.uk/images/bbc-logo-in-qr-code.gif'
 
@@ -44,7 +49,7 @@ decodes a plethora of barcodes. Their site has a complete list.
 
     # ZXing#decode! will raise an error if it can't decode the image.
     ZXing.decode! 'image_without_a_code.png' #=> raises ZXing::UndecodableError
-    
+
 == Decodable module
 
 A Decodable module is included (pun intended) to ease using the library with objects that return the URL or file path to decode when #path or #to_s is called.
