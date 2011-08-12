@@ -15,6 +15,7 @@ module ZXing
     java_import com.google.zxing.common.GlobalHistogramBinarizer
     java_import com.google.zxing.LuminanceSource
     java_import com.google.zxing.client.j2se.BufferedImageLuminanceSource
+    java_import com.google.zxing.multi.GenericMultipleBarcodeReader
 
     java_import javax.imageio.ImageIO
     java_import java.net.URL
@@ -34,12 +35,36 @@ module ZXing
         nil
       end
 
+      def self.decode_all!(file)
+        new(file).decode_all
+      rescue NativeException
+        raise UndecodableError
+      end
+
+      def self.decode_all(file)
+        decode_all!(file)
+      rescue UndecodableError
+        nil
+      end
+
       def initialize(file)
         self.file = file
       end
 
+      def reader
+        MultiFormatReader.new
+      end
+
       def decode
-        MultiFormatReader.new.decode(bitmap).to_s
+        reader.decode(bitmap).to_s
+      end
+
+      def decode_all
+        multi_barcode_reader = GenericMultipleBarcodeReader.new(reader)
+
+        multi_barcode_reader.decode_multiple(bitmap).map do |result|
+          result.get_text
+        end
       end
 
       private

@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "sdoc", "~> 0.2.20"
   s.add_development_dependency "rspec", "~> 2.5.0"
+  s.add_development_dependency "rake", "~> 0.9.2"
 
   s.rubyforge_project = "zxing"
   s.files         = Dir.glob("{bin,lib,spec}/**/*") + %w(README.rdoc)

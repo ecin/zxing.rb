@@ -8,7 +8,7 @@ task :default => :spec
 
 Bundler::GemHelper.install_tasks
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 require 'sdoc'
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
