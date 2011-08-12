@@ -44,7 +44,7 @@ module ZXing
       def self.decode_all(file)
         decode_all!(file)
       rescue UndecodableError
-        nil
+        []
       end
 
       def initialize(file)

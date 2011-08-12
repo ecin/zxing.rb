@@ -90,7 +90,7 @@ describe ZXing do
 
     context "when the image cannot be decoded" do
       let(:file) { fixture_image("cat") }
-      it { should be_nil }
+      it { should == [] }
     end
 
     context "when file does not exist" do
