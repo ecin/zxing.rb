@@ -17,12 +17,11 @@ if RUBY_PLATFORM == 'java'
 
       private
       def self.abort_on_parent_exit!
-        Thread.new do
-          begin
-            STDIN.read
-          rescue IOError
-            exit
-          end
+        Thread.new(Thread.current) do |parent|
+          loop {
+            exit unless parent.alive?
+            sleep 0.5
+          }
         end
       end
     end
