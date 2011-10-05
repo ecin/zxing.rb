@@ -21,8 +21,8 @@ module ZXing
   #   path = "./no_encoded_image.png"
   #   ZXing.decode(path) #=> nil
   #
-  def self.decode(file)
-    Decoder.decode normalize(file)
+  def self.decode(file, hints=nil)
+    Decoder.decode normalize(file), hints
   end
 
   ##
@@ -35,8 +35,8 @@ module ZXing
   #   path = "./no_encoded_image.png"
   #   ZXing.decode(path) #=> ZXing::UndecodableError
   #
-  def self.decode!(file)
-    Decoder.decode! normalize(file)
+  def self.decode!(file, hints=nil)
+    Decoder.decode! normalize(file), hints
   end
 
   ##

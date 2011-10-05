@@ -11,6 +11,8 @@ module ZXing
 
     java_import com.google.zxing.MultiFormatReader
     java_import com.google.zxing.BinaryBitmap
+    java_import com.google.zxing.DecodeHintType
+    java_import java.util.Hashtable
     java_import com.google.zxing.Binarizer
     java_import com.google.zxing.common.GlobalHistogramBinarizer
     java_import com.google.zxing.LuminanceSource
@@ -23,14 +25,14 @@ module ZXing
     class Decoder
       attr_accessor :file
 
-      def self.decode!(file)
-        new(file).decode
+      def self.decode!(file, hints=nil)
+        new(file).decode(hints)
       rescue NativeException
         raise UndecodableError
       end
 
-      def self.decode(file)
-        decode!(file)
+      def self.decode(file, hints=nil)
+        decode!(file, hints)
       rescue UndecodableError
         nil
       end
@@ -55,8 +57,38 @@ module ZXing
         MultiFormatReader.new
       end
 
-      def decode
-        reader.decode(bitmap).to_s
+      def get_hint_hashtable(hints)
+        # Create HashTable to pass to #decode as the second parameter.
+        ht = Hashtable.new
+        hints.each do |hint,value|
+          case hint
+          when :try_harder
+            ht.put(DecodeHintType::TRY_HARDER, value)
+          when :character_set
+            ht.put(DecodeHintType::CHARACTER_SET, value)
+          when :allowed_lengths
+            ht.put(DecodeHintType::ALLOWED_LENGTHS, value)
+          when :pure_barcode
+            ht.put(DecodeHintType::PURE_BARCODE, value)
+          when :assume_code_39_check_digit
+            ht.put(DecodeHintType::ASSUME_CODE_39_CHECK_DIGIT, value)
+          when :need_result_point_callback
+            ht.put(DecodeHintType::NEED_RESULT_POINT_CALLBACK, value)
+          when :possible_formats
+            ht.put(DecodeHintType::POSSIBLE_FORMATS, value)
+          else
+            raise StandardError, "'#{hint}' is not a valid DecodeHintType"
+          end
+        end
+        ht
+      end
+
+      def decode(hints=nil)
+       if hints
+          reader.decode(bitmap, get_hint_hashtable(hints)).to_s
+        else
+          reader.decode(bitmap)
+        end
       end
 
       def decode_all
