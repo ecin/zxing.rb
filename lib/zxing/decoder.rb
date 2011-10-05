@@ -57,6 +57,24 @@ module ZXing
         MultiFormatReader.new
       end
 
+      def decode(hints=nil)
+       if hints
+          reader.decode(bitmap, get_hint_hashtable(hints)).to_s
+        else
+          reader.decode(bitmap)
+        end
+      end
+
+      def decode_all
+        multi_barcode_reader = GenericMultipleBarcodeReader.new(reader)
+
+        multi_barcode_reader.decode_multiple(bitmap).map do |result|
+          result.get_text
+        end
+      end
+
+      private
+
       def get_hint_hashtable(hints)
         # Create HashTable to pass to #decode as the second parameter.
         ht = Hashtable.new
@@ -82,24 +100,6 @@ module ZXing
         end
         ht
       end
-
-      def decode(hints=nil)
-       if hints
-          reader.decode(bitmap, get_hint_hashtable(hints)).to_s
-        else
-          reader.decode(bitmap)
-        end
-      end
-
-      def decode_all
-        multi_barcode_reader = GenericMultipleBarcodeReader.new(reader)
-
-        multi_barcode_reader.decode_multiple(bitmap).map do |result|
-          result.get_text
-        end
-      end
-
-      private
 
       def bitmap
         BinaryBitmap.new(binarizer)
