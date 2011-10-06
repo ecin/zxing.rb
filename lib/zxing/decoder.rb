@@ -12,6 +12,8 @@ module ZXing
     java_import com.google.zxing.MultiFormatReader
     java_import com.google.zxing.BinaryBitmap
     java_import com.google.zxing.DecodeHintType
+    java_import com.google.zxing.BarcodeFormat
+    java_import java.util.Vector
     java_import java.util.Hashtable
     java_import com.google.zxing.Binarizer
     java_import com.google.zxing.common.GlobalHistogramBinarizer
@@ -75,25 +77,30 @@ module ZXing
 
       private
 
+      def get_possible_formats(formats)
+        raise StandardError unless formats.class == Array
+
+        vector = Vector.new
+        formats.each {|f| vector.addElement(BarcodeFormat.valueOf(f))}
+        vector
+      end
+
       def get_hint_hashtable(hints)
-        # Create HashTable to pass to #decode as the second parameter.
         ht = Hashtable.new
         hints.each do |hint,value|
           case hint
           when :try_harder
-            ht.put(DecodeHintType::TRY_HARDER, value)
+            ht.put(DecodeHintType::TRY_HARDER, value == true)
           when :character_set
-            ht.put(DecodeHintType::CHARACTER_SET, value)
+            ht.put(DecodeHintType::CHARACTER_SET, value.to_s)
           when :allowed_lengths
-            ht.put(DecodeHintType::ALLOWED_LENGTHS, value)
+            ht.put(DecodeHintType::ALLOWED_LENGTHS, value.to_i)
           when :pure_barcode
-            ht.put(DecodeHintType::PURE_BARCODE, value)
+            ht.put(DecodeHintType::PURE_BARCODE, value == true)
           when :assume_code_39_check_digit
-            ht.put(DecodeHintType::ASSUME_CODE_39_CHECK_DIGIT, value)
-          when :need_result_point_callback
-            ht.put(DecodeHintType::NEED_RESULT_POINT_CALLBACK, value)
+            ht.put(DecodeHintType::ASSUME_CODE_39_CHECK_DIGIT, value == true)
           when :possible_formats
-            ht.put(DecodeHintType::POSSIBLE_FORMATS, value)
+            ht.put(DecodeHintType::POSSIBLE_FORMATS, get_possible_formats(value))
           else
             raise StandardError, "'#{hint}' is not a valid DecodeHintType"
           end
