@@ -63,7 +63,7 @@ module ZXing
        if hints
           reader.decode(bitmap, get_hint_hashtable(hints)).to_s
         else
-          reader.decode(bitmap)
+          reader.decode(bitmap).to_s
         end
       end
 
