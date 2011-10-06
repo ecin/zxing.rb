@@ -9,7 +9,8 @@ end
 
 describe ZXing do
   describe ".decode" do
-    subject { ZXing.decode(file) }
+    subject { ZXing.decode(file, hints) }
+    let(:hints) { nil }
 
     context "with a string path to image" do
       let(:file) { fixture_image("example") }
@@ -43,6 +44,35 @@ describe ZXing do
       end
     end
 
+    context "when hints provided include an invalid choice" do
+      let(:file) { fixture_image("example") }
+      let(:hints) { {:invalid_choice => true} }
+      it "raise an error" do
+        expect { subject }.to raise_error(StandardError)
+      end
+    end
+
+    context "when hints possible_formats specifies format of code on image" do
+      let(:file) { fixture_image("example") }
+      let(:hints) { {:possible_formats => ["QR_CODE"] } }
+      it { should == "example" }
+    end
+
+    context "when hints possible_formats specifies format other than code on image" do
+      let(:file) { fixture_image("example") }
+      let(:hints) { {:possible_formats => ["CODE_128"] } }
+      it "should return nil" do
+        should == nil
+      end
+    end
+
+    context "when hints possible_formats is not an array" do
+      let(:file) { fixture_image("example") }
+      let(:hints) { {:possible_formats => "CODE_128" } }
+      it "raise an error" do
+        expect { subject }.to raise_error(StandardError)
+      end
+    end
   end
 
   describe ".decode!" do
