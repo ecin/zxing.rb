@@ -44,6 +44,17 @@ describe ZXing do
       end
     end
 
+    context "when hints/try_harder is not set should find 1D codes first" do
+      let(:file) { fixture_image("another_example") }
+      it { should == "1D_test"}
+    end
+
+    context "when hints/try_harder is set should find QR code first" do
+      let(:file) { fixture_image("another_example") }
+      let(:hints) { {:try_harder => true} }
+      it { should == "QR_test"}
+    end
+
     context "when hints provided include an invalid choice" do
       let(:file) { fixture_image("example") }
       let(:hints) { {:invalid_choice => true} }
