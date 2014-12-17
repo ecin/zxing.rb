@@ -6,8 +6,8 @@ module ZXing
     Decoder = Client.new
   else
     require 'java'
-    require 'zxing/core.jar'
-    require 'zxing/javase.jar'
+    require 'zxing/core-3.1.1-SNAPSHOT.jar'
+    require 'zxing/javase-3.1.1-SNAPSHOT.jar'
 
     java_import com.google.zxing.MultiFormatReader
     java_import com.google.zxing.BinaryBitmap
