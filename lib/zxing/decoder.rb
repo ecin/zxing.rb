@@ -66,9 +66,7 @@ module ZXing
       end
 
       def qrcode_decode
-        result = qr_decode(bitmap)
-        return result if result
-        qr_decode(hybird_bitmap)
+        qr_decode(bitmap) || qr_decode(hybrid_bitmap)
       end
 
       def decode_all
@@ -110,7 +108,7 @@ module ZXing
         HybridBinarizer.new(luminance)
       end
 
-      def hybird_bitmap
+      def hybrid_bitmap
         BinaryBitmap.new(hybrid_binarizer)
       end
 
