@@ -73,6 +73,10 @@ module ZXing
     Decoder.decode_all! normalize(file)
   end
 
+  def self.qrcode_decode(file)
+    Decoder.qrcode_decode normalize(file)
+  end
+
   private
   def self.normalize(file)
     file.respond_to?(:path) ? file.path : file
