@@ -50,6 +50,9 @@ decodes a plethora of barcodes. Their site has a complete list.
     # ZXing#decode! will raise an error if it can't decode the image.
     ZXing.decode! 'image_without_a_code.png' #=> raises ZXing::UndecodableError
 
+    # You can call ZXing#qrcode_decode if you only want to decode QR Code
+    ZXing.qrcode_decode '/Users/ecin/qrcode.png' #=> "QRcode string"
+
 == Decodable module
 
 A Decodable module is included (pun intended) to ease using the library with objects that return the URL or file path to decode when #path or #to_s is called.
