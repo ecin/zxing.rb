@@ -130,4 +130,32 @@ describe ZXing do
     end
   end
 
+  describe ".qrcode_decode" do
+    subject { ZXing.qrcode_decode(file) }
+
+    context "with image1" do
+      let(:file) { File.new(fixture_image("img-0001")) }
+      it { should == "SDQI:{\"name\":\"Miss Punniya  teston120416\",\"ess_id\":\"punniya prabhu\",\"tag\":\"General\"}" }
+    end
+
+    context "with image2" do
+      let(:file) { File.new(fixture_image("img-0002")) }
+      it { should == "SDQI:{\"job seeker name\":\"Tom Gouke\",\"id\":20012,\"tag\":\"abcdefgababcdefgababcdefgababcdefgab1234abcdefgababcdefgababcdefgababcdefgab1234abcdefgababcdefgababcdefgababcdefgab1234abcdefgababcdefgababcdefgababcdefgab1234\"}" }
+    end
+
+    context "with image3" do
+      let(:file) { File.new(fixture_image("img-0003")) }
+      it { should == "SDQI:{\"name\":\"Miss Punniya  teston120416\",\"ess_id\":\"punniya prabhu\",\"tag\":\"General\"}" }
+    end
+
+    context "with image4" do
+      let(:file) { File.new(fixture_image("img-0004")) }
+      it { should == "SDQI:{\"name\":\"Miss test name long long\",\"ess_id\":101016,\"tag\":\"test tags is very long very long very long very long\"}" }
+    end
+
+    context "with image5" do
+      let(:file) { File.new(fixture_image("img-0005")) }
+      it { should == "SDQI:{\"name\":\"Able Seaman pei han\",\"ess_id\":\"111\",\"tag\":\"resume1\"}" }
+    end
+  end
 end
