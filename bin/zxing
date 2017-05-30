@@ -12,7 +12,8 @@ java_args = [
   "org.jruby.Main"
 ]
 
-lib = File.expand_path('../../lib', __FILE__)
+root_path = File.expand_path('../../', __FILE__)
+lib = File.join(root_path, 'lib')
 $:.unshift(lib) unless $:.include?(lib)
 
 path = "#{lib}/zxing/server.rb"
@@ -22,4 +23,6 @@ ruby_args = [
   "-e", "ZXing::Server.start!(#{port})"
 ]
 
+gemfile = File.join(root_path, 'Gemfile')
+ENV['BUNDLE_GEMFILE'] = gemfile
 exec("java", *(java_args + ruby_args))
