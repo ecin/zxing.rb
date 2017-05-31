@@ -16,9 +16,6 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency "jruby-jars"
   end
 
-  s.add_development_dependency "rspec"
-  s.add_development_dependency "rake"
-
   s.rubyforge_project = "zxing"
   s.files         = Dir.glob("{bin,lib,spec}/**/*") + %w(README.rdoc)
   s.test_files    = Dir.glob("spec/**/*")
