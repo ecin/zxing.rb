@@ -3,7 +3,6 @@ require 'uri'
 module ZXing
   if RUBY_PLATFORM != 'java'
     require 'zxing/client'
-    Decoder = Client.new
   else
     require 'java'
     require 'zxing/core-3.3.0.jar'
