@@ -22,7 +22,7 @@ module ZXing
   #   ZXing.decode(path) #=> nil
   #
   def self.decode(file)
-    Decoder.decode normalize(file)
+    decoder.decode normalize(file)
   end
 
   ##
@@ -36,7 +36,7 @@ module ZXing
   #   ZXing.decode(path) #=> ZXing::UndecodableError
   #
   def self.decode!(file)
-    Decoder.decode! normalize(file)
+    decoder.decode! normalize(file)
   end
 
   ##
@@ -56,7 +56,7 @@ module ZXing
   #   ZXing.decode_all(path) #=> nil
   #
   def self.decode_all(file)
-    Decoder.decode_all normalize(file)
+    decoder.decode_all normalize(file)
   end
 
   ##
@@ -70,10 +70,19 @@ module ZXing
   #   ZXing.decode(path) #=> ZXing::UndecodableError
   #
   def self.decode_all!(file)
-    Decoder.decode_all! normalize(file)
+    decoder.decode_all! normalize(file)
+  end
+
+  def self.qrcode_decode(file)
+    decoder.qrcode_decode normalize(file)
   end
 
   private
+
+  def self.decoder
+    @@decoder ||= Client.new
+  end
+
   def self.normalize(file)
     file.respond_to?(:path) ? file.path : file
   end

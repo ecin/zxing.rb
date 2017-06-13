@@ -3,16 +3,17 @@ require 'uri'
 module ZXing
   if RUBY_PLATFORM != 'java'
     require 'zxing/client'
-    Decoder = Client.new
   else
     require 'java'
-    require 'zxing/core-3.1.1-SNAPSHOT.jar'
-    require 'zxing/javase-3.1.1-SNAPSHOT.jar'
+    require 'zxing/core-3.3.0.jar'
+    require 'zxing/javase-3.3.0.jar'
 
     java_import com.google.zxing.MultiFormatReader
+    java_import com.google.zxing.qrcode.QRCodeReader
     java_import com.google.zxing.BinaryBitmap
     java_import com.google.zxing.Binarizer
     java_import com.google.zxing.common.GlobalHistogramBinarizer
+    java_import com.google.zxing.common.HybridBinarizer
     java_import com.google.zxing.LuminanceSource
     java_import com.google.zxing.client.j2se.BufferedImageLuminanceSource
     java_import com.google.zxing.multi.GenericMultipleBarcodeReader
@@ -47,6 +48,10 @@ module ZXing
         []
       end
 
+      def self.qrcode_decode(file)
+        new(file).qrcode_decode
+      end
+
       def initialize(file)
         self.file = file
       end
@@ -57,6 +62,10 @@ module ZXing
 
       def decode
         reader.decode(bitmap).to_s
+      end
+
+      def qrcode_decode
+        qr_decode(bitmap) || qr_decode(hybrid_bitmap)
       end
 
       def decode_all
@@ -92,6 +101,24 @@ module ZXing
 
       def binarizer
         GlobalHistogramBinarizer.new(luminance)
+      end
+
+      def hybrid_binarizer
+        HybridBinarizer.new(luminance)
+      end
+
+      def hybrid_bitmap
+        BinaryBitmap.new(hybrid_binarizer)
+      end
+
+      def qr_decode(bitmap)
+        qrcode_reader.decode(bitmap).to_s
+      rescue NativeException
+        nil
+      end
+
+      def qrcode_reader
+        @qrcode_reader ||= QRCodeReader.new
       end
     end
   end
